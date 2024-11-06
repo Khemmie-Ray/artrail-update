@@ -21,12 +21,15 @@ const MarketPlace = () => {
                     <br />Secure, Transparent Blockchain Marketplace
                 </p>
             </div>
-            <button className="bg-[#33302E] w-[30%] mt-1 mr-1 text-white mb-1 rounded-3xl p-4 border border-white">
-              Track
-            </button>
-          <ProductCard />
-    </main>
-  );
+            <div className="border border-white rounded-3xl w-[50%] flex justify-between">
+                <div className="grid place-content-center text-[13px] p-4"><p className="text-white text-center font-thin ">Input Product tracking code</p></div>
+                <button className="bg-[#33302E] w-[30%] mt-1 mr-1 text-white mb-1 rounded-3xl p-4 border border-white font-thin">
+                    Track
+                </button>
+            </div>
+            <ProductCard />
+        </main>
+    );
 };
 
 export default MarketPlace;
