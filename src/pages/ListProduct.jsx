@@ -200,7 +200,7 @@ const ListProduct = () => {
           backgroundSize: "100%",
         }}
       >
-        <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-white from-15% to-[#FFB054] to-90% lg:text-[38px] md:text-[38px] text-[30px] font-titiliumweb font-[700] my-4">
+        <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-white from-15% to-[#FFB054] to-90% lg:text-[38px] md:text-[38px] text-[30px] font-Sorts Mill Goudy font-[700] my-4">
           Tokenizing Real-World Assets for
           <br />
           Global Access and Trust

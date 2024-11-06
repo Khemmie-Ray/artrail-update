@@ -8,11 +8,10 @@ export default {
     extend: {
       fontFamily: {
         'opensans': ["Open Sans"," sans-serif"],
-        'titiliumweb': ["Titillium Web"," sans-serif"]
+        'titiliumweb': ["Titillium Web"," sans-serif"],
+        "Sorts Mill Goudy" :[ 'serif' ],
       },
-      color:{
-
-      },
+      
     },
   },
   plugins: [],

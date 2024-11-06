@@ -13,7 +13,7 @@ const Hero = () => {
                 <div>
                     <div className="flex justify-between flex-col lg:flex-row md:flex-row items-center px-4 lg:px-0 md:px-0">
                         <div className="xl:w-[70%] lg:w-[70%] md:w-[70%] w-[90%] p-16">
-                            <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-white from-10% to-[#FFB054] font-serif lg:text-[60px] md:text-[60px] text-[40px] font-[700]">
+                            <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-white from-10% to-[#FFB054] font-Sorts Mill Goudy lg:text-[60px] md:text-[60px] text-[40px] font-[700]">
                                 Tokenizing Real-World
                                 <br /> Assets for Global Access
                                 <br />and Trust
