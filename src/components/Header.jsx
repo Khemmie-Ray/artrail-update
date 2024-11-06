@@ -34,12 +34,12 @@ const Header = () => {
           >
             Marketplace
           </NavLink>
-          <NavLink
+          {isConnected && (<NavLink
             to="/store"
             className="text-white hover:text-[#FFB054] hover:font-[500] mr-10 text-[18px] font-serif"
           >
             Store
-          </NavLink>
+          </NavLink>)}
 
         </nav>
         <Menu as="div" className="relative inline-block text-left ">
@@ -63,14 +63,14 @@ const Header = () => {
                  <w3m-button />
                 </a>
               </MenuItem>
-              <MenuItem>
+              {isConnected && (<MenuItem>
                 <a
                   href="/store"
                   className="block px-4 py-2 text-sm text-white data-[focus]:bg-[#54BE73] data-[focus]:text-white"
                 >
                  My Stores
                 </a>
-              </MenuItem>
+              </MenuItem>)}
               {isConnected && (<MenuItem>
                 <a
                   href="/create-store"

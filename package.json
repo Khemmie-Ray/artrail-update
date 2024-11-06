@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.1.10",
     "@web3modal/ethers": "^5.1.11",
+    "artrail": "file:",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.4",
