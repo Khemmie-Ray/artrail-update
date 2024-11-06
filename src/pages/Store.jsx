@@ -156,7 +156,7 @@ const Store = () => {
           <div className="flex lg:flex-row md:flex-row flex-col justify-between my-10 flex-wrap">
             {productItem.map((info) => (
               <div className="lg:w-[32%] md:w-[32%] w-[100%] p-4  border-white rounded-xl border shadow-lg mb-4">
-                <Link to={`/marketplace/${info.productId}`}>
+                <Link to={`/store/${info.productId}`}>
                   <img
                     src={info.productUri}
                     alt=""

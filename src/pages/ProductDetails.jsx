@@ -83,7 +83,6 @@ const ProductDetails = () => {
 
   // if (error) return toast.error(`Error: ${error.message}`)
   // if (!data) return <div>Loading...</div>;
-  console.log(id,amount, quantity)
 
   return (
     <main className="bg-[#231D16]">

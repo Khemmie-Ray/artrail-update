@@ -35,8 +35,8 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="/marketplace" element={<MarketPlace />} />
       <Route path="/marketplace/:id" element={<ProductDetails />} />
       <Route path="/store" element={<Store />} />
+      <Route path="/store/:id" element={<SellerProductDetails />} />
       <Route path="/profile" element={<CreateAccount />} />
-      <Route path="/sellerproductdetails" element={<SellerProductDetails />} />
       <Route path="/store/allproducts" element={<AllProducts />} />
       <Route path="/store/transactions" element={<Transactions />} />
       <Route path="/chat" element={<Chat />} />
