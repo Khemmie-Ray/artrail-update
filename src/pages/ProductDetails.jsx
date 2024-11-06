@@ -65,12 +65,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Calling API with params:", {
-          contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
-          method: "getProductDetails",
-          contractSpecsId: 12237,
-          params: id,
-        });
+       
         const result = await CallApi(
           "getProductDetails",
           import.meta.env.VITE_CONTRACT_ADDRESS,

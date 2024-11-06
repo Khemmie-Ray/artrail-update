@@ -1,12 +1,41 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { formatUnits } from "ethers";
 import otherBackground from "../assets/otherBackground.svg";
-import featured1 from "../assets/featured1.svg";
-import featured2 from "../assets/featured2.svg";
-import featured3 from "../assets/featured3.svg";
 import Ellipse from "../assets/Ellipse.svg";
+import LoadingSpinner from "../components/Loader/LoadingSpinner";
+import { toast } from "react-toastify";
+import CallApi from "../api/CallApi";
+import { useWeb3ModalAccount } from "@web3modal/ethers/react";
 
-const AllProducts = () => {
+const AllProducts  = () => {
+  const [productItem, setProductItem] = useState(null);
+  const [error, setError] = useState(null);
+  const { address } = useWeb3ModalAccount()
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try { 
+        const products = await CallApi(
+          "getCreatorProducts",
+          import.meta.env.VITE_CONTRACT_ADDRESS,
+          12237,
+          [address]
+        );
+        setProductItem(products.flat());
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchProduct();
+  }, []);
+
+  if (error)
+    return toast.error(`Error: ${error.message}`, {
+      position: "top-center",
+    });
+  if (!productItem) return <LoadingSpinner />;
   
   return (
     <main className="bg-[#231D16]">
@@ -20,9 +49,9 @@ const AllProducts = () => {
         <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-white from-15% to-[#FFB054] to-90% lg:text-[38px] md:text-[38px] text-[30px] font-titiliumweb font-[700] my-4">
           Welcome to your store
         </h1>
-        {/* <button onClick={fetchData} className="bg-[#54BE73] text-white py-2 px-4  lg:text-[20px] md:text-[20px] font-bold text-[16px] w-1/4 my-4 rounded-3xl">
-          Mint Your NFT
-        </button> */}
+        <button className="bg-[#54BE73] text-white py-2 px-4  lg:text-[20px] md:text-[20px] font-bold text-[16px] w-1/4 my-4 rounded-3xl">
+          List Product
+        </button>
       </div>
       <section
         className="bg-[#231D16] bg-no-repeat py-8 px-2"
@@ -51,7 +80,7 @@ const AllProducts = () => {
             </div>
           </div>
           <h3 className="font-medium text-white mt-4 lg:mt-4 md:mt-4 my-2 lg:text-[16px] md:text-[16px] text-[12px] capitalise font-titiliumweb flex justify-between">
-            <Link to="/store/all-products">All Products</Link>{" "}
+            <Link to="/store/AllProducts ">All Products</Link>{" "}
             <span>
               <Link to="/store/transactions">All Transactions </Link>
             </span>
@@ -62,65 +91,31 @@ const AllProducts = () => {
               <Link to="/store/claimednfts">Claimed NFTs</Link>
             </span>
           </h3>
-
           <div className="flex lg:flex-row md:flex-row flex-col justify-between my-10 flex-wrap">
-            <div className="lg:w-[32%] md:w-[32%] w-[100%] p-4  border-white rounded-xl border shadow-lg mb-4">
-              <img
-                src={featured1}
-                alt=""
-                className="w-[100%] h-[237px] object-cover object-center rounded-lg"
-              />
-              <h3 className="font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]  text-white">
-                Handcrafted Wooden Sculpture
-              </h3>
-              <p className=" flex justify-between text-white lg:text-[14px] md:text-[14px] text-[10px] ">
-                Ghana, West Africa <span>Status: Sold</span>
-              </p>
-              <p className="flex justify-between text-white font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]">
-                0.5 ETH <span>10 units </span>
-              </p>
-              <p className="flex justify-between text-[#54BE73]  lg:text-[14px] md:text-[14px] text-[10px]">
-                Price <span>Quantity </span>
-              </p>
-            </div>
-            <div className="lg:w-[32%] md:w-[32%] w-[100%] p-4  border-white rounded-xl border shadow-lg mb-4">
-              <img
-                src={featured2}
-                alt=""
-                className="w-[100%] h-[237px] object-cover object-center rounded-lg"
-              />
-              <h3 className="font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]  text-white">
-                Vintage Ceramic Vase
-              </h3>
-              <p className="flex justify-between text-white lg:text-[14px] md:text-[14px] text-[10px]">
-                Florence, Italy <span>Status: Listed</span>
-              </p>
-              <p className="flex justify-between text-white font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]">
-                1 ETH <span>3 units </span>
-              </p>
-              <p className="flex justify-between text-[#54BE73]  lg:text-[14px] md:text-[14px] text-[10px]">
-                Price <span>Quantity </span>
-              </p>
-            </div>
-            <div className="lg:w-[32%] md:w-[32%] w-[100%] p-4  border-white rounded-xl border shadow-lg mb-4">
-              <img
-                src={featured3}
-                alt=""
-                className="w-[100%] h-[237px] object-cover object-center rounded-lg"
-              />
-              <h3 className="font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]  text-white">
-                Artisan Silk Wall Hanging
-              </h3>
-              <p className="flex justify-between text-white lg:text-[14px] md:text-[14px] text-[10px]">
-                Istanbul, Turkey <span>Status: Canceled</span>
-              </p>
-              <p className="flex justify-between text-white font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]">
-                0.8 ETH <span>5 units </span>
-              </p>
-              <p className="flex justify-between text-[#54BE73]  lg:text-[14px] md:text-[14px] text-[10px]">
-                Price <span>Quantity </span>
-              </p>
-            </div>
+            {productItem.map((info) => (
+              <div className="lg:w-[32%] md:w-[32%] w-[100%] p-4  border-white rounded-xl border shadow-lg mb-4">
+                <Link to={`/marketplace/${info.productId}`}>
+                  <img
+                    src={info.productUri}
+                    alt=""
+                    className="w-[100%] h-[237px] object-cover object-center rounded-lg"
+                  />
+                  <h3 className="font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]  text-white">
+                    {info.productName}
+                  </h3>
+                  <p className=" text-white lg:text-[14px] md:text-[14px] text-[10px] ">
+                    {info.productOrigin}
+                  </p>
+                  <p className="flex justify-between text-white font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]">
+                    {formatUnits(info.productPrice.toString(), "ether")} ETH{" "}
+                    <span>{info.quantity}units </span>
+                  </p>
+                  <p className="flex justify-between text-[#54BE73]  lg:text-[14px] md:text-[14px] text-[10px]">
+                    Price <span>Quantity </span>
+                  </p>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>

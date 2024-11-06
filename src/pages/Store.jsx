@@ -9,35 +9,50 @@ import Ellipse from "../assets/Ellipse.svg";
 import { FaPlus } from "react-icons/fa6";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import ProductCard from "../components/ProductCard";
+import { useWeb3ModalAccount } from "@web3modal/ethers/react";
 
 const Store = () => {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const result = await CallApi(
-            "allCreators",
-            import.meta.env.VITE_CONTRACT_ADDRESS,
-            12237
-          );
-          setData(result.flat());
-        } catch (err) {
-          setError(err);
-        }
-      };
-  
-      fetchData();
-    }, []);
-  
-    if (error)
-      return toast.error(`Error: ${error.message}`, {
-        position: "top-center",
-      });
-    if (!data) return <LoadingSpinner />;
-    console.log(data)
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const { address } = useWeb3ModalAccount();
+  const [productItem, setProductItem] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // console.log("Calling API with params:", {
+        //   contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
+        //   method: "getProductDetails",
+        //   contractSpecsId: 12237,
+        //   params: address,
+        // });
+        const result = await CallApi(
+          "getCreatorStores",
+          import.meta.env.VITE_CONTRACT_ADDRESS,
+          12237,
+          [address]
+        );
+        const products = await CallApi(
+          "getCreatorProducts",
+          import.meta.env.VITE_CONTRACT_ADDRESS,
+          12237,
+          [address]
+        );
+        setData(result.flat());
+        setProductItem(products.flat());
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (error)
+    return toast.error(`Error: ${error.message}`, {
+      position: "top-center",
+    });
+  if (!data) return <LoadingSpinner />;
 
   return (
     <main className="bg-[#231D16]">
@@ -52,7 +67,7 @@ const Store = () => {
           Welcome to your store
         </h1>
         <button className="bg-[#54BE73] text-white py-2 px-4  lg:text-[20px] md:text-[20px] font-bold text-[16px] w-1/4 my-4 rounded-3xl">
-          Mint Your NFT
+          List Product
         </button>
       </div>
       <section
@@ -82,7 +97,7 @@ const Store = () => {
             </div>
           </div>
           <h3 className="font-medium text-white mt-4 lg:mt-4 md:mt-4 my-2 lg:text-[16px] md:text-[16px] text-[12px] capitalise font-titiliumweb flex justify-between">
-            <Link to="/store/all-products" >All Products</Link>{" "}
+            <Link to="/store/allproducts">All Products</Link>{" "}
             <span>
               <Link to="/store/transactions">All Transactions </Link>
             </span>
@@ -117,26 +132,53 @@ const Store = () => {
                 </tr>
               </thead>
               <tbody className="text-white p-4">
-                {data.map((info) => (<tr className="font-serif font-normal text-center">
-                  <td className="border-b font-serif font-normal p-2">
-                    {info.name}
-                  </td>
-                  <td className="border-b font-serif font-normal p-2">
-                  {info.creator.substring(0, 6) + '...'}
-                  </td>
-                  <td className="border-b font-serif font-normal p-2">
-                    <Link to="/" className="text-[#54BE73]">
-                      View Store
-                    </Link>
-                  </td>
-                  <td className="border-b font-serif font-normal p-2">
-                    <MdDelete color="red" />
-                  </td>
-                </tr>))}
+                {data.map((info) => (
+                  <tr className="font-serif font-normal text-center">
+                    <td className="border-b font-serif font-normal p-2">
+                      {info.name}
+                    </td>
+                    <td className="border-b font-serif font-normal p-2">
+                      {info.creator.substring(0, 15) + "..."}
+                    </td>
+                    <td className="border-b font-serif font-normal p-2">
+                      <Link to="/store" className="text-[#54BE73]">
+                        View Store
+                      </Link>
+                    </td>
+                    <td className="border-b font-serif font-normal p-2">
+                      <MdDelete color="red" />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-         <ProductCard />
+          <div className="flex lg:flex-row md:flex-row flex-col justify-between my-10 flex-wrap">
+            {productItem.map((info) => (
+              <div className="lg:w-[32%] md:w-[32%] w-[100%] p-4  border-white rounded-xl border shadow-lg mb-4">
+                <Link to={`/marketplace/${info.productId}`}>
+                  <img
+                    src={info.productUri}
+                    alt=""
+                    className="w-[100%] h-[237px] object-cover object-center rounded-lg"
+                  />
+                  <h3 className="font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]  text-white">
+                    {info.productName}
+                  </h3>
+                  <p className=" text-white lg:text-[14px] md:text-[14px] text-[10px] ">
+                    {info.productOrigin}
+                  </p>
+                  <p className="flex justify-between text-white font-bold mt-4 lg:text-[18px] md:text-[18px] text-[16px]">
+                    {formatUnits(info.productPrice.toString(), "ether")} ETH{" "}
+                    <span>{info.quantity}units </span>
+                  </p>
+                  <p className="flex justify-between text-[#54BE73]  lg:text-[14px] md:text-[14px] text-[10px]">
+                    Price <span>Quantity </span>
+                  </p>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </main>
