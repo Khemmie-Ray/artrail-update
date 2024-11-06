@@ -21,7 +21,7 @@ const AllPurchasedProducts = () => {
                     Welcome to your store
                 </h1>
                 <button className="bg-[#54BE73] text-white py-2 px-4  lg:text-[20px] md:text-[20px] font-bold text-[16px] w-1/4 my-4 rounded-3xl">
-                    Mint Your NFT
+                    List Product
                 </button>
             </div>
             <section className='bg-[#231D16] bg-no-repeat py-8 px-2'
